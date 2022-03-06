@@ -18,6 +18,12 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
 	private Point[][] points;
 	private int size = 14;
 
+	public void setCurrentRule(Rules currentRule) {
+		this.currentRule = currentRule;
+	}
+
+	private Rules currentRule = Rules.DEFAULT;
+
 	public Board(int length, int height) {
 		addMouseListener(this);
 		addComponentListener(this);
@@ -30,7 +36,7 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
 	public void iteration() {
 		for (int x = 0; x < points.length; ++x)
 			for (int y = 0; y < points[x].length; ++y)
-				points[x][y].calculateNewState();
+				points[x][y].calculateNewState(currentRule);
 
 		for (int x = 0; x < points.length; ++x)
 			for (int y = 0; y < points[x].length; ++y)

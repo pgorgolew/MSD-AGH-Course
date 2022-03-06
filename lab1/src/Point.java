@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Point {
 	private ArrayList<Point> neighbors;
@@ -25,9 +24,11 @@ public class Point {
 		currentState = s;
 	}
 
-	public void calculateNewState() {
+	public void calculateNewState(Rules rule) {
 		int aliveNeighbours = calculateActiveNeighbours();
-		if (aliveNeighbours == 3 || (aliveNeighbours == 2 && currentState == 1))
+		if (currentState == 1 && rule.neighboursForAliveCell().contains(aliveNeighbours))
+			nextState = 1;
+		else if (currentState == 0 && rule.neighboursForDeadCell().contains(aliveNeighbours))
 			nextState = 1;
 		else
 			nextState = 0;

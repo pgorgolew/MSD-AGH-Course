@@ -4,11 +4,7 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JSlider;
-import javax.swing.Timer;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -21,7 +17,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 	private Board board;
 	private JButton start;
 	private JButton clear;
-	private JButton defaultRules;
+	private JComboBox rules;
 	private JSlider pred;
 	private JFrame frame;
 	private int iterNum = 0;
@@ -49,12 +45,7 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 		start.setToolTipText("Starts clock");
 		start.addActionListener(this);
 
-		clear = new JButton("Default");
-		clear.setActionCommand("clear");
-		clear.setToolTipText("Clears the board");
-		clear.addActionListener(this);
-
-		defaultRules = new JButton("Clear");
+		clear = new JButton("clear");
 		clear.setActionCommand("clear");
 		clear.setToolTipText("Clears the board");
 		clear.addActionListener(this);
@@ -66,9 +57,16 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 		pred.addChangeListener(this);
 		pred.setValue(maxDelay - timer.getDelay());
 
+		rules = new JComboBox(Rules.values());
+		rules.setActionCommand("setRules");
+		rules.setToolTipText("Set rules");
+		rules.setSelectedIndex(0);
+		rules.addActionListener(this);
+
 		buttonPanel.add(start);
 		buttonPanel.add(clear);
 		buttonPanel.add(pred);
+		buttonPanel.add(rules);
 
 		board = new Board(1024, 768 - buttonPanel.getHeight());
 		container.add(board, BorderLayout.CENTER);
@@ -104,7 +102,11 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 				start.setEnabled(true);
 				board.clear();
 				frame.setTitle("Cellular Automata Toolbox");
-			} 
+			}
+			else if (command.equals("setRules")){
+				Rules rule = Rules.getRuleFromIndex(rules.getSelectedIndex());
+				board.setCurrentRule(rule);
+			}
 
 		}
 	}
