@@ -5,7 +5,8 @@ import java.util.List;
 public enum Rules {
     DEFAULT(0),
     CITIES(1),
-    CORAL(2);
+    CORAL(2),
+    ODD_EVEN(3);
 
     final int ruleNumber;
 
@@ -28,9 +29,11 @@ public enum Rules {
 
         switch (this){
             case DEFAULT, CORAL ->
-                    neighbours.addAll(Arrays.asList(3));
+                    neighbours.add(3);
             case CITIES ->
                     neighbours.addAll(Arrays.asList(4,5,6,7,8));
+            case ODD_EVEN ->
+                    neighbours.addAll(Arrays.asList(2,4,6,8));
         }
 
         return neighbours;
@@ -46,6 +49,8 @@ public enum Rules {
                     neighbours.addAll(Arrays.asList(2,3,4,5));
             case CORAL ->
                     neighbours.addAll(Arrays.asList(4,5,6,7,8));
+            case ODD_EVEN ->
+                    neighbours.addAll(Arrays.asList(1,3,5,7));
         }
 
         return neighbours;

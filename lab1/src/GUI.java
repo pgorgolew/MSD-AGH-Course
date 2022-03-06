@@ -107,7 +107,6 @@ public class GUI extends JPanel implements ActionListener, ChangeListener {
 				Rules rule = Rules.getRuleFromIndex(rules.getSelectedIndex());
 				board.setCurrentRule(rule);
 			}
-
 		}
 	}
 
