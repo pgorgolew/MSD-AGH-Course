@@ -9,6 +9,8 @@ public class Point {
 	public float wVel;
 	public float sVel;
 	public float pressure;
+	public static Integer[] types ={0,1,2};
+	int type = 0;
 
 	public Point() {
 		clear();
@@ -27,11 +29,18 @@ public class Point {
 	}
 
 	public void updateVelocity() {
-		// TODO: velocity update
+		if (type == 0){
+			nVel = nVel - (nNeighbor.pressure - pressure);
+			eVel = eVel - (eNeighbor.pressure - pressure);
+			sVel = sVel - (sNeighbor.pressure - pressure);
+			wVel = wVel - (wNeighbor.pressure - pressure);
+		}
+
 	}
 
 	public void updatePresure() {
-		// TODO: pressure update
+		if (type == 0)
+			pressure = pressure - 0.5f*(nVel+sVel+wVel+eVel);
 	}
 
 	public float getPressure() {
