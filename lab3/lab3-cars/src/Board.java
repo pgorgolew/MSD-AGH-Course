@@ -10,6 +10,7 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
     private Point[][] points;
     private int size = 10;
     public int editType = 0;
+    private double p = 0.4;
 
     public Board(int length, int height) {
         addMouseListener(this);
@@ -36,12 +37,33 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
     }
 
     public void iteration() {
+        //set moved false
         for (int x = 0; x < points.length; ++x) {
             for (int y = 0; y < points[x].length; ++y) {
                 points[x][y].setMoved(false);
             }
         }
 
+        //speed up and slow down if needed
+        for (int x = 0; x < points.length; ++x) {
+            for (int y = 0; y < points[x].length; ++y) {
+                if (points[x][y].type == 1) {
+                    points[x][y].speed_up();
+                    points[x][y].slow_down_if_needed();
+                }
+            }
+        }
+
+        //slow down with probabilty p
+        for (int x = 0; x < points.length; ++x) {
+            for (int y = 0; y < points[x].length; ++y) {
+                if (points[x][y].type == 1 && Math.random() < p){
+                    points[x][y].slow_down();
+                }
+            }
+        }
+
+        //move
         for (int x = 0; x < points.length; ++x) {
             for (int y = 0; y < points[x].length; ++y) {
                 points[x][y].move();
