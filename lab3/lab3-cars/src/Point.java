@@ -42,8 +42,8 @@ public class Point {
     public void slow_down_if_needed(){
         Point neighbour = this;
         for (int i=0; i<speed; i++){
-            if (this.next.type == 1){
-                this.speed = i;
+            if (neighbour.next.type == 1){
+                speed = i;
                 break;
             }
             neighbour = neighbour.next;
