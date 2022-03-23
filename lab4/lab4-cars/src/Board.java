@@ -29,7 +29,7 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
                 if (y<2 || y >= points[x].length-2)
                     type = 5;
 
-            points[x][y] = new Point(type);
+                points[x][y] = new Point(type);
             }
         }
 
@@ -73,6 +73,7 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
                 points[x][y].move();
             }
         }
+
         this.repaint();
     }
 
@@ -148,7 +149,9 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
             }
             else {
                 points[x][y].type= editType;
-            } this.repaint();
+                points[x][y].speed = Point.get_max_speed(editType);
+            }
+            this.repaint();
         }
     }
 

@@ -26,22 +26,27 @@ public class Point {
     }
 
     public void move() {
-        if (carTypes.contains(this.type) && !moved ) {
+        if (carTypes.contains(this.type) && !moved) {
+            if (speed == 0){
+                moved = true;
+                return;
+            }
             Point curr = this;
             for (int i=0; i<speed; i++){
                 curr = curr.next;
             }
 
             curr.type = getType();
-            moved = true;
             curr.moved = true;
             curr.speed = this.speed;
-            this.clear();
+            clear();
+            moved = true;
         }
     }
 
     public void clicked() {
         this.type = 0;
+        this.speed = 0;
     }
 
     public void clear() {
@@ -52,7 +57,7 @@ public class Point {
     public void slow_down_if_needed(){
         Point neighbour = this;
         for (int i=0; i<speed; i++){
-            if (neighbour.next.type == 1){
+            if (carTypes.contains(neighbour.next.type)){
                 speed = i;
                 break;
             }
@@ -61,7 +66,7 @@ public class Point {
     }
 
     public void speed_up(){
-        if (speed < 5){
+        if (speed < get_max_speed()){
             speed += 1;
         }
     }
