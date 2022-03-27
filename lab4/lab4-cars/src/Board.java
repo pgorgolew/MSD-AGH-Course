@@ -35,7 +35,14 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
 
         for (int x = 0; x < points.length; ++x) {
             for (int y = 0; y < points[x].length; ++y) {
-                points[x][y].setNext(points[(x+1)%points.length][y]);
+                points[x][y].next = points[(x + 1) % points.length][y];
+                points[x][y].next = points[(x - 1 + points.length) % points.length][y];
+
+                if (y>2)
+                    points[x][y].left = points[x][y-1];
+
+                if (y < points[x].length-3)
+                    points[x][y].right = points[x][y+1];
             }
         }
     }

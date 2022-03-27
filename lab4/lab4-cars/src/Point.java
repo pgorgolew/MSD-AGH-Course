@@ -4,6 +4,9 @@ import java.util.Arrays;
 public class Point {
     public int type;
     public Point next;
+    public Point prev;
+    public Point left = null;
+    public Point right = null;
     public boolean moved;
     public int speed;
     public static Integer[] types = {0, 1, 2, 3, 5};
@@ -21,16 +24,13 @@ public class Point {
         this.speed = get_max_speed(type);
     }
 
-    public void setNext(Point next) {
-        this.next = next;
-    }
-
     public void move() {
         if (carTypes.contains(this.type) && !moved) {
             if (speed == 0){
                 moved = true;
                 return;
             }
+
             Point curr = this;
             for (int i=0; i<speed; i++){
                 curr = curr.next;
