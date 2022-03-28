@@ -36,7 +36,7 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
         for (int x = 0; x < points.length; ++x) {
             for (int y = 0; y < points[x].length; ++y) {
                 points[x][y].next = points[(x + 1) % points.length][y];
-                points[x][y].next = points[(x - 1 + points.length) % points.length][y];
+                points[x][y].prev = points[(x - 1 + points.length) % points.length][y];
 
                 if (y>2)
                     points[x][y].left = points[x][y-1];
@@ -52,25 +52,6 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
         for (int x = 0; x < points.length; ++x) {
             for (int y = 0; y < points[x].length; ++y) {
                 points[x][y].setMoved(false);
-            }
-        }
-
-        //speed up and slow down if needed
-        for (int x = 0; x < points.length; ++x) {
-            for (int y = 0; y < points[x].length; ++y) {
-                if (Point.carTypes.contains(points[x][y].type)) {
-                    points[x][y].speed_up();
-                    points[x][y].slow_down_if_needed();
-                }
-            }
-        }
-
-        //slow down with probabilty p
-        for (int x = 0; x < points.length; ++x) {
-            for (int y = 0; y < points[x].length; ++y) {
-                if (Point.carTypes.contains(points[x][y].type) && Math.random() < p){
-                    points[x][y].slow_down();
-                }
             }
         }
 

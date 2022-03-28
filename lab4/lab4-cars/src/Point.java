@@ -26,24 +26,82 @@ public class Point {
 
     public void move() {
         if (carTypes.contains(this.type) && !moved) {
-            if (speed == 0){
-                moved = true;
+            System.out.println("SIEMA");
+            Point curr = this;
+            if (isAbleToGoRight()){
+                System.out.println("SIEMALEFT");
+                curr = getPointAfterSideChange(this.right);
+            }
+            else if (isAbleToGoLeft()){
+                System.out.println("SIEMARIGHT");
+                curr = getPointAfterSideChange(this.left);
+            }
+            else{
+                speed_up();
+                curr.speed = slowDownIfNeeded(curr);
+            }
+
+            if (curr.speed == 0){
+                curr.moved = true;
                 return;
             }
 
-            Point curr = this;
-            for (int i=0; i<speed; i++){
-                curr = curr.next;
-            }
+            Point next_pos = curr;
+            for (int i=0; i<curr.speed; i++)
+                next_pos = next_pos.next;
 
-            curr.type = getType();
+            next_pos.type = curr.getType();
+            next_pos.moved = true;
+            next_pos.speed = curr.speed;
+            curr.type = 0;
+            curr.speed = 0;
             curr.moved = true;
-            curr.speed = this.speed;
-            clear();
-            moved = true;
         }
     }
 
+    private Point getPointAfterSideChange(Point side) {
+        side.type = this.type;
+        side.speed = this.speed;
+        this.moved = true;
+        clear();
+        return side;
+    }
+
+    public boolean isAbleToGoLeft(){
+        return speed != get_max_speed() && left != null && isDistanceBehind(this, 7) && isDistanceBehind(left, 7) && isDistanceAhead(left);
+    }
+
+    public boolean isAbleToGoRight(){
+       return right != null && isDistanceBehind(right, 7) && isDistanceAhead(right) && !isDistanceBehind(this, 7);
+    }
+
+    public boolean isDistanceBehind(Point starting, int max_distance){
+        Point curr = starting;
+        int distance = 0;
+        while (distance <= max_distance){
+            if (carTypes.contains(curr.type) && curr != this)
+                return curr.get_max_speed() < distance;
+
+            curr = curr.prev;
+            distance++;
+        }
+
+        return true;
+    }
+
+    public boolean isDistanceAhead(Point starting){
+        Point curr = starting;
+        int distance = 0;
+        while (distance <= curr.speed && curr != this){
+            if (carTypes.contains(curr.type))
+                return false;
+
+            curr = curr.next;
+            distance++;
+        }
+
+        return true;
+    }
     public void clicked() {
         this.type = 0;
         this.speed = 0;
@@ -54,15 +112,18 @@ public class Point {
         speed = 0;
     }
 
-    public void slow_down_if_needed(){
-        Point neighbour = this;
-        for (int i=0; i<speed; i++){
+    public int slowDownIfNeeded(Point p){
+        int maxLaneSpeed = speed;
+        Point neighbour = p;
+        for (int i=0; i<p.speed; i++){
             if (carTypes.contains(neighbour.next.type)){
-                speed = i;
+                maxLaneSpeed = i;
                 break;
             }
             neighbour = neighbour.next;
         }
+
+        return maxLaneSpeed;
     }
 
     public void speed_up(){
