@@ -91,8 +91,8 @@ public class Point {
     public boolean isDistanceAhead(Point starting){
         Point curr = starting;
         int distance = 0;
-        while (distance <= curr.speed && curr != this){
-            if (carTypes.contains(curr.type))
+        while (distance <= curr.speed){
+            if (carTypes.contains(curr.type) && curr != this)
                 return false;
 
             curr = curr.next;
