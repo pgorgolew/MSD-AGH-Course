@@ -26,14 +26,11 @@ public class Point {
 
     public void move() {
         if (carTypes.contains(this.type) && !moved) {
-            System.out.println("SIEMA");
             Point curr = this;
             if (isAbleToGoRight()){
-                System.out.println("SIEMALEFT");
                 curr = getPointAfterSideChange(this.right);
             }
             else if (isAbleToGoLeft()){
-                System.out.println("SIEMARIGHT");
                 curr = getPointAfterSideChange(this.left);
             }
             else{
@@ -68,11 +65,13 @@ public class Point {
     }
 
     public boolean isAbleToGoLeft(){
-        return speed != get_max_speed() && left != null && isDistanceBehind(this, 7) && isDistanceBehind(left, 7) && isDistanceAhead(left);
+        return speed != get_max_speed() && left != null && isDistanceBehind(this, 7) &&
+                isDistanceBehind(left, 7) && isDistanceAhead(left);
     }
 
     public boolean isAbleToGoRight(){
-       return right != null && isDistanceBehind(right, 7) && isDistanceAhead(right) && !isDistanceBehind(this, 7);
+       return right != null && isDistanceBehind(right, 7) && isDistanceAhead(right) &&
+               !isDistanceBehind(this, 7);
     }
 
     public boolean isDistanceBehind(Point starting, int max_distance){
