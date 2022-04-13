@@ -14,7 +14,7 @@ public class Board extends JComponent implements MouseInputListener, ComponentLi
 	private Point[][] points;
 	private int size = 10;
 	public int editType=0;
-	public boolean moore = true;
+	public boolean moore = false;
 
 	public Board(int length, int height) {
 		addMouseListener(this);

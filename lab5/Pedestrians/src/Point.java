@@ -20,6 +20,9 @@ public class Point {
 	}
 
 	public boolean calcStaticField() {
+		if (type == 1 || type == 2)
+			return false;
+
 		int smallest = staticField;
 		for (Point neighbour: neighbors){
 			smallest = Math.min(smallest, neighbour.staticField);
@@ -52,6 +55,7 @@ public class Point {
 				}
 				this.type = 0;
 				this.isPedestrian = false;
+				this.blocked = true;
 			}
 			new_position.blocked = true;
 		}
