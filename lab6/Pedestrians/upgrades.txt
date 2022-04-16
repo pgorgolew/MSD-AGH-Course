@@ -1,0 +1,4 @@
+1. Improved calculation method for static floor field.
+2. Random order of pedestrian's movement.
+3. Add repulsion force between pedestrians and walls (add it by modification of static floor field close to the walls).
+4. Pedestrian is choosing the best possible move (sometimes it is worse position)
